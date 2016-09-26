@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stephen Whitmore <stephen.whitmore@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "mkdirp": "^0.5.1"
+  }
 }
