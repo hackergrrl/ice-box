@@ -1,0 +1,11 @@
+{
+  "name": "frozen-dirs",
+  "version": "0.0.0",
+  "description": "Create unique, write-once directories.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Whitmore <stephen.whitmore@gmail.com>",
+  "license": "ISC"
+}
