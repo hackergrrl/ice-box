@@ -4,6 +4,7 @@ var fs = require('fs-extra')
 var mkdirp = require('mkdirp')
 var guid = require('guid').raw
 var ncp = require('ncp')
+var walk = require('walk-fs')
 
 module.exports = function (outDir, tmpDir) {
   var tmpDirHead = guid()
@@ -22,6 +23,7 @@ module.exports = function (outDir, tmpDir) {
           if (err) return finish(err)
 
           // Set outdir as read-only
+          // recursiveChmod(outFull, 0555, function (err) {
           fs.chmod(outFull, 0555, function (err) {
             if (err) return finish(err)
 
@@ -35,4 +37,11 @@ module.exports = function (outDir, tmpDir) {
       })
     })
   }
+}
+
+// TODO: https://www.npmjs.com/package/walk-fs
+function recursiveChmod (dir, mode, done) {
+  walk(dir, function (_path, stats) {
+    console.log(_path, stats)
+  }, done)
 }
