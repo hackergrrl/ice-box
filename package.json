@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^0.30.0",
-    "mkdirp": "^0.5.1"
+    "guid": "0.0.12",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0"
   }
 }

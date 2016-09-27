@@ -1,33 +1,44 @@
+var os = require('os')
 var path = require('path')
 var fs = require('fs-extra')
 var mkdirp = require('mkdirp')
+var guid = require('guid').raw
+var ncp = require('ncp')
 
 module.exports = function (outDir, tmpDir) {
-  // TODO: use module to get os temp dir
-  tmpDir = path.join(tmpDir || '/tmp', ('dir-store-'+(''+Math.random()).substring(2, 7)))
-  console.log(tmpDir)
+  var tmpDirHead = guid()
+  var tmpDir = path.join(tmpDir || os.tmpdir(), tmpDirHead)
 
-  var name = 'dir-'+(''+Math.random()).substring(2, 7)
-  var dir = path.join(tmpDir, name)
+  mkdirp.sync(tmpDir)
 
-  mkdirp.sync(dir)
+  return function (work, finish) {
+    work(tmpDir, function () {
+      // Copy tmpdir to outdir
+      var outFull = path.join(outDir, tmpDirHead)
+      fs.mkdirs(outFull, function (err) {
+        if (err) return finish(err)
+        console.log('mkdir', outFull)
 
-  return function (pre, post) {
-    pre(dir, function () {
-      var outFull = path.join(outDir, name)
-      fs.copySync(dir, outFull)
-      post(null, outFull)
+        console.log('copy', tmpDir, outFull)
+
+        ncp(tmpDir, outFull, function (err) {
+          if (err) return finish(err)
+          console.log('copied')
+
+          // Set outdir as read-only
+          fs.chmod(outFull, 0555, function (err) {
+            if (err) return finish(err)
+            console.log('chmodded')
+
+            // Remove tmpdir and finish
+            fs.remove(tmpDir, function (err) {
+              console.log('cleaned up')
+
+              finish(err, outFull)
+            })
+          })
+        })
+      })
     })
   }
-
-  // TODO: remove all write bits on final dir
 }
-
-//   function (tmpPath, done) {
-//   fs.mkdirSync(path.join(tmpPath, 'foo'))
-//   fs.writeFileSync(path.join(tmpPath, 'bar'), new Buffer('hello thar!'))
-//   process.nextTick(done)
-// }, function (path, err) {
-//   console.log('frozen dir located at', path)
-// }
-
