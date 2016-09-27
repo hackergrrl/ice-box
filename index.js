@@ -17,22 +17,16 @@ module.exports = function (outDir, tmpDir) {
       var outFull = path.join(outDir, tmpDirHead)
       fs.mkdirs(outFull, function (err) {
         if (err) return finish(err)
-        console.log('mkdir', outFull)
-
-        console.log('copy', tmpDir, outFull)
 
         ncp(tmpDir, outFull, function (err) {
           if (err) return finish(err)
-          console.log('copied')
 
           // Set outdir as read-only
           fs.chmod(outFull, 0555, function (err) {
             if (err) return finish(err)
-            console.log('chmodded')
 
             // Remove tmpdir and finish
             fs.remove(tmpDir, function (err) {
-              console.log('cleaned up')
 
               finish(err, outFull)
             })
