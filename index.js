@@ -16,7 +16,7 @@ module.exports = function (outDir, tmpDir) {
   mkdirp.sync(tmpDir)
 
   return function (work, finish) {
-    work(tmpDir, function () {
+    work(path.resolve(tmpDir), function () {
       // Copy tmpdir to outdir
       var outFull = path.join(outDir, tmpDirHead)
       fs.mkdirs(outDir, function (err) {
@@ -27,10 +27,9 @@ module.exports = function (outDir, tmpDir) {
 
           // Set outdir as read-only
           recursiveChmod(outFull, function (err) {
-          // fs.chmod(outFull, o(555), function (err) {
             if (err) return finish(err)
 
-            finish(err, outFull)
+            finish(err, path.resolve(outFull))
           })
         })
       })
@@ -40,7 +39,6 @@ module.exports = function (outDir, tmpDir) {
 
 function recursiveChmod (dir, done) {
   walk(dir, function (_path, stats) {
-    console.error(_path, stats)
     if (stats.isDirectory()) {
       fs.chmodSync(_path, o(755))
     } else {
