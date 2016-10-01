@@ -5,6 +5,8 @@ var mkdirp = require('mkdirp')
 var guid = require('guid').raw
 var ncp = require('ncp')
 var o = require('octal')
+var mv = require('mv')
+var walk = require('walk-fs')
 
 module.exports = function (outDir, tmpDir) {
   outDir = outDir || 'ice-box'
@@ -17,23 +19,18 @@ module.exports = function (outDir, tmpDir) {
     work(tmpDir, function () {
       // Copy tmpdir to outdir
       var outFull = path.join(outDir, tmpDirHead)
-      fs.mkdirs(outFull, function (err) {
+      fs.mkdirs(outDir, function (err) {
         if (err) return finish(err)
 
-        ncp(tmpDir, outFull, function (err) {
+        mv(tmpDir, outFull, function (err) {
           if (err) return finish(err)
 
-          // Remove tmpdir and finish
-          fs.remove(tmpDir, function (err) {
+          // Set outdir as read-only
+          recursiveChmod(outFull, function (err) {
+          // fs.chmod(outFull, o(555), function (err) {
             if (err) return finish(err)
 
-            // Set outdir as read-only
-            // recursiveChmod(outFull, o(555), function (err) {
-            fs.chmod(outFull, o(555), function (err) {
-              if (err) return finish(err)
-
-              finish(err, outFull)
-            })
+            finish(err, outFull)
           })
         })
       })
@@ -41,9 +38,13 @@ module.exports = function (outDir, tmpDir) {
   }
 }
 
-// TODO: https://www.npmjs.com/package/walk-fs
-// function recursiveChmod (dir, mode, done) {
-//   walk(dir, function (_path, stats) {
-//     console.log(_path, stats)
-//   }, done)
-// }
+function recursiveChmod (dir, done) {
+  walk(dir, function (_path, stats) {
+    console.error(_path, stats)
+    if (stats.isDirectory()) {
+      fs.chmodSync(_path, o(755))
+    } else {
+      fs.chmodSync(_path, o(555))
+    }
+  }, done)
+}
