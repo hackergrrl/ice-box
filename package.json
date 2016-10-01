@@ -1,11 +1,21 @@
 {
-  "name": "frozen-dirs",
+  "name": "ice-box",
   "version": "0.0.0",
-  "description": "Create unique, write-once directories.",
+  "description": "Create unique, write-once, immutable directories.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "immutable",
+    "frozen",
+    "write-once",
+    "read-only",
+    "read only",
+    "unique",
+    "pipe",
+    "directory"
+  ],
   "author": "Stephen Whitmore <stephen.whitmore@gmail.com>",
   "license": "ISC",
   "dependencies": {
