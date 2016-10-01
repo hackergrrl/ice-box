@@ -7,8 +7,9 @@ var ncp = require('ncp')
 var walk = require('walk-fs')
 
 module.exports = function (outDir, tmpDir) {
+  outDir = outDir || 'ice-box'
   var tmpDirHead = guid()
-  var tmpDir = path.join(tmpDir || path.join(os.tmpdir(), 'dir-store'), tmpDirHead)
+  var tmpDir = path.join(tmpDir || path.join(os.tmpdir(), 'ice-box'), tmpDirHead)
 
   mkdirp.sync(tmpDir)
 

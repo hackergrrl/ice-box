@@ -1,12 +1,12 @@
-var dirpipe = require('../')('./dist')
-var walk = require('fs-walk');
-var ncp = require('ncp').ncp;
+var icebox = require('../')()
+var walk = require('fs-walk')
+var ncp = require('ncp').ncp
 var fs = require('fs')
 var path = require('path')
 
 var src = process.argv[2]
 
-dirpipe(function (dst, done) {
+icebox(function (dst, done) {
   ncp(src, dst, function (err) {
     if (err) {
       console.error(err)
