@@ -1,6 +1,4 @@
 var icebox = require('../')()
-var walk = require('fs-walk')
-var ncp = require('ncp').ncp
 var fs = require('fs')
 var path = require('path')
 var tar = require('tar-fs')

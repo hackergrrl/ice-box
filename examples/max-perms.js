@@ -14,7 +14,7 @@ icebox(function (dst, done) {
     }
 
     walk.walk(dst, function (basedir, filename, stat, next) {
-      fs.chmod(path.join(basedir, filename), 0777, next)
+      fs.chmod(path.join(basedir, filename), 0o777, next)
     }, done)
   })
 }, function (err, finalDir) {
