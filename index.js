@@ -8,7 +8,7 @@ var walk = require('walk-fs')
 
 module.exports = function (outDir, tmpDir) {
   var tmpDirHead = guid()
-  var tmpDir = path.join(tmpDir || os.tmpdir(), tmpDirHead)
+  var tmpDir = path.join(tmpDir || path.join(os.tmpdir(), 'dir-store'), tmpDirHead)
 
   mkdirp.sync(tmpDir)
 
