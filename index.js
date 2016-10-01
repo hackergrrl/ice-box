@@ -4,6 +4,7 @@ var fs = require('fs-extra')
 var mkdirp = require('mkdirp')
 var guid = require('guid').raw
 var ncp = require('ncp')
+var o = require('octal')
 
 module.exports = function (outDir, tmpDir) {
   outDir = outDir || 'ice-box'
@@ -27,8 +28,8 @@ module.exports = function (outDir, tmpDir) {
             if (err) return finish(err)
 
             // Set outdir as read-only
-            // recursiveChmod(outFull, 0o555, function (err) {
-            fs.chmod(outFull, 0o555, function (err) {
+            // recursiveChmod(outFull, o(555), function (err) {
+            fs.chmod(outFull, o(555), function (err) {
               if (err) return finish(err)
 
               finish(err, outFull)

@@ -3,6 +3,7 @@ var walk = require('fs-walk')
 var ncp = require('ncp').ncp
 var fs = require('fs')
 var path = require('path')
+var o = require('octal')
 
 var src = process.argv[2]
 
@@ -14,7 +15,7 @@ icebox(function (dst, done) {
     }
 
     walk.walk(dst, function (basedir, filename, stat, next) {
-      fs.chmod(path.join(basedir, filename), 0o777, next)
+      fs.chmod(path.join(basedir, filename), o(777), next)
     }, done)
   })
 }, function (err, finalDir) {

@@ -23,6 +23,7 @@
     "guid": "0.0.12",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
+    "octal": "^1.0.0",
     "walk-fs": "0.0.2"
   },
   "devDependencies": {
