@@ -22,13 +22,14 @@ module.exports = function (outDir, tmpDir) {
         ncp(tmpDir, outFull, function (err) {
           if (err) return finish(err)
 
-          // Set outdir as read-only
-          // recursiveChmod(outFull, 0555, function (err) {
-          fs.chmod(outFull, 0555, function (err) {
+          // Remove tmpdir and finish
+          fs.remove(tmpDir, function (err) {
             if (err) return finish(err)
 
-            // Remove tmpdir and finish
-            fs.remove(tmpDir, function (err) {
+            // Set outdir as read-only
+            // recursiveChmod(outFull, 0555, function (err) {
+            fs.chmod(outFull, 0555, function (err) {
+              if (err) return finish(err)
 
               finish(err, outFull)
             })
