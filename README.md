@@ -125,6 +125,9 @@ $ node build-electron.js . | node make-tar.js
 
 Now we have a directory with a tarball of the electron package!
 
+*Bonus*: all intermediate steps are permanently cacheable, since they're
+immutable and permanent!
+
 
 ## API
 
