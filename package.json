@@ -25,7 +25,7 @@
     "mv": "^2.1.1",
     "ncp": "^2.0.0",
     "octal": "^1.0.0",
-    "walk-fs": "0.0.2"
+    "walk": "^2.3.9"
   },
   "devDependencies": {
     "standard": "^8.3.0"

@@ -6,7 +6,7 @@ var guid = require('guid').raw
 var ncp = require('ncp')
 var o = require('octal')
 var mv = require('mv')
-var walk = require('walk-fs')
+var walk = require('walk').walk
 
 module.exports = function (outDir, tmpDir) {
   outDir = outDir || 'ice-box'
@@ -38,11 +38,28 @@ module.exports = function (outDir, tmpDir) {
 }
 
 function recursiveChmod (dir, done) {
-  walk(dir, function (_path, stats) {
-    if (stats.isDirectory()) {
-      fs.chmodSync(_path, o(755))
-    } else {
-      fs.chmodSync(_path, o(555))
-    }
-  }, done)
+  var walker = walk(dir)
+
+  walker.on('directory', function (root, dirStatsArray, next) {
+    console.error('dir', root)
+    fs.chmodSync(root, o(755))
+    next()
+  })
+
+  walker.on('file', function (root, fileStats, next) {
+    var _path = path.join(root, fileStats.name)
+    console.error('path', _path)
+    fs.chmodSync(_path, o(555))
+    next()
+  })
+
+  walker.on('errors', function (err) {
+    console.error('err', err)
+    done(err)
+  })
+
+  walker.on('end', function () {
+    console.error('done')
+    done()
+  })
 }
