@@ -41,25 +41,21 @@ function recursiveChmod (dir, done) {
   var walker = walk(dir)
 
   walker.on('directory', function (root, dirStatsArray, next) {
-    console.error('dir', root)
     fs.chmodSync(root, o(755))
     next()
   })
 
   walker.on('file', function (root, fileStats, next) {
     var _path = path.join(root, fileStats.name)
-    console.error('path', _path)
     fs.chmodSync(_path, o(555))
     next()
   })
 
   walker.on('errors', function (err) {
-    console.error('err', err)
     done(err)
   })
 
   walker.on('end', function () {
-    console.error('done')
     done()
   })
 }
