@@ -3,7 +3,6 @@ var path = require('path')
 var fs = require('fs-extra')
 var mkdirp = require('mkdirp')
 var guid = require('guid').raw
-var ncp = require('ncp')
 var o = require('octal')
 var mv = require('mv')
 var walk = require('walk').walk
