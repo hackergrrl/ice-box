@@ -2,7 +2,7 @@
 
 > easy, one-off immutable directories!
 
-[Pure functions]() are a powerful concept. They allow you to, given an input,
+[Pure functions](https://en.m.wikipedia.org/wiki/Pure_function) are a powerful concept. They allow you to, given an input,
 produce the same deterministic output, *without side effects*.
 
 On the filesystem, this is hard to achieve. Filesystems are all about side
