@@ -12,10 +12,18 @@ module.exports = function (outDir, tmpDir) {
   var tmpDirHead = guid()
   tmpDir = path.join(tmpDir || path.join(os.tmpdir(), 'ice-box'), tmpDirHead)
 
-  mkdirp.sync(tmpDir)
-
   return function (work, finish) {
-    work(path.resolve(tmpDir), function () {
+    mkdirp.sync(tmpDir)
+
+    work(path.resolve(tmpDir), function (err) {
+      if (err) {
+        // clean up!
+        return fs.remove(tmpDir, function (err2) {
+          if (err2) return finish(err2)
+          return finish(err)
+        })
+      }
+
       // Copy tmpdir to outdir
       var outFull = path.join(outDir, tmpDirHead)
       fs.mkdirs(outDir, function (err) {

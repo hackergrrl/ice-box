@@ -153,7 +153,8 @@ Creates a new directory for writing to.
 `work` is a function of the form `function (dir, done) { ... }`. `dir` is the
 absolute path to the in-progress temporary directory. It has full write
 permissions. `done` is a function to call once you are done writing, to signify
-that the directory can be "frozen" and placed in the icebox.
+that the directory can be "frozen" and placed in the icebox. If you pass in an
+error (`done(err)`) then the entire operation will abort cleanly.
 
 `done` is a function of the form `function (dir) { ... }`. It is called once the
 newly-frozen output directory is placed in the ice-box (`outDir` from the above

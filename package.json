@@ -4,7 +4,7 @@
   "description": "Create unique, write-once, immutable directories.",
   "main": "index.js",
   "scripts": {
-    "test": "standard *.js examples/*"
+    "test": "standard *.js examples/* && tape test/*"
   },
   "keywords": [
     "immutable",
@@ -27,6 +27,7 @@
     "walk": "^2.3.9"
   },
   "devDependencies": {
-    "standard": "^8.3.0"
+    "standard": "^8.3.0",
+    "tape": "^4.6.2"
   }
 }
